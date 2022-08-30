@@ -20,43 +20,28 @@
         "name": "ECBM_LIB",
         "files": [
           {
+            "path": "ECBM_LIB/adc.c"
+          },
+          {
+            "path": "ECBM_LIB/cmp.c"
+          },
+          {
             "path": "ECBM_LIB/ecbm_core.c"
-          },
-          {
-            "path": "ECBM_LIB/gpio.c"
-          },
-          {
-            "path": "ECBM_LIB/power.c"
-          },
-          {
-            "path": "ECBM_LIB/uart.c"
-          },
-          {
-            "path": "ECBM_LIB/exti.c"
-          },
-          {
-            "path": "ECBM_LIB/timer.c"
           },
           {
             "path": "ECBM_LIB/eeprom.c"
           },
           {
-            "path": "ECBM_LIB/spi.c"
+            "path": "ECBM_LIB/exti.c"
           },
           {
-            "path": "ECBM_LIB/soft_spi.c"
+            "path": "ECBM_LIB/gpio.c"
           },
           {
             "path": "ECBM_LIB/iic.c"
           },
           {
-            "path": "ECBM_LIB/soft_iic.c"
-          },
-          {
-            "path": "ECBM_LIB/adc.c"
-          },
-          {
-            "path": "ECBM_LIB/cmp.c"
+            "path": "ECBM_LIB/lcm.c"
           },
           {
             "path": "ECBM_LIB/mdu16.c"
@@ -65,10 +50,25 @@
             "path": "ECBM_LIB/pca.c"
           },
           {
+            "path": "ECBM_LIB/power.c"
+          },
+          {
             "path": "ECBM_LIB/pwm.c"
           },
           {
-            "path": "ECBM_LIB/lcm.c"
+            "path": "ECBM_LIB/soft_iic.c"
+          },
+          {
+            "path": "ECBM_LIB/soft_spi.c"
+          },
+          {
+            "path": "ECBM_LIB/spi.c"
+          },
+          {
+            "path": "ECBM_LIB/timer.c"
+          },
+          {
+            "path": "ECBM_LIB/uart.c"
           }
         ],
         "folders": []
@@ -77,37 +77,7 @@
         "name": "LIB_LIST",
         "files": [
           {
-            "path": "ECBM_LIB/ecbm_core.h"
-          },
-          {
-            "path": "ECBM_LIB/gpio.h"
-          },
-          {
-            "path": "ECBM_LIB/power.h"
-          },
-          {
-            "path": "ECBM_LIB/uart.h"
-          },
-          {
-            "path": "ECBM_LIB/exti.h"
-          },
-          {
-            "path": "ECBM_LIB/timer.h"
-          },
-          {
-            "path": "ECBM_LIB/eeprom.h"
-          },
-          {
-            "path": "ECBM_LIB/spi.h"
-          },
-          {
-            "path": "ECBM_LIB/soft_spi.h"
-          },
-          {
-            "path": "ECBM_LIB/iic.h"
-          },
-          {
-            "path": "ECBM_LIB/soft_iic.h"
+            "path": "device/ST7567.h"
           },
           {
             "path": "ECBM_LIB/adc.h"
@@ -116,22 +86,52 @@
             "path": "ECBM_LIB/cmp.h"
           },
           {
+            "path": "ECBM_LIB/ecbm_core.h"
+          },
+          {
+            "path": "ECBM_LIB/ecbm_reg.h"
+          },
+          {
+            "path": "ECBM_LIB/eeprom.h"
+          },
+          {
+            "path": "ECBM_LIB/exti.h"
+          },
+          {
+            "path": "ECBM_LIB/gpio.h"
+          },
+          {
+            "path": "ECBM_LIB/iic.h"
+          },
+          {
+            "path": "ECBM_LIB/lcm.h"
+          },
+          {
             "path": "ECBM_LIB/mdu16.h"
           },
           {
             "path": "ECBM_LIB/pca.h"
           },
           {
+            "path": "ECBM_LIB/power.h"
+          },
+          {
             "path": "ECBM_LIB/pwm.h"
           },
           {
-            "path": "ECBM_LIB/ecbm_reg.h"
+            "path": "ECBM_LIB/soft_iic.h"
           },
           {
-            "path": "ECBM_LIB/lcm.h"
+            "path": "ECBM_LIB/soft_spi.h"
           },
           {
-            "path": "../Users/Patrick/Downloads/MCU/ecbm-library-lite-master/device/ST7567.h"
+            "path": "ECBM_LIB/spi.h"
+          },
+          {
+            "path": "ECBM_LIB/timer.h"
+          },
+          {
+            "path": "ECBM_LIB/uart.h"
           }
         ],
         "folders": []
@@ -140,10 +140,10 @@
         "name": "USER",
         "files": [
           {
-            "path": "STARTUP.A51"
+            "path": "main.c"
           },
           {
-            "path": "main.c"
+            "path": "STARTUP.A51"
           }
         ],
         "folders": []
@@ -173,7 +173,7 @@
       "custom_dep": {
         "name": "default",
         "incList": [
-          "../../../../../Keil_v5/C51/INC/STC",
+          "../../../../../../Keil_v5/C51/INC/STC",
           "ECBM_LIB",
           "device/new_test",
           "device/proj",

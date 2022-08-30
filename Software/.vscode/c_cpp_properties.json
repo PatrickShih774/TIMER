@@ -1,0 +1,45 @@
+{
+    "configurations": [
+        {
+            "name": "STC8",
+            "includePath": [
+                "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Software\\ECBM_LIB",
+                "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Software\\device\\new_test",
+                "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Software\\device\\proj",
+                "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Software\\device",
+                "C:\\Keil_v5\\C51\\INC",
+                "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Software",
+                "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Users\\Patrick\\Downloads\\MCU\\ecbm-library-lite-master\\device",
+                "c:\\Users\\Patrick\\Downloads\\MCU\\ecbm-library-lite-master\\device"
+            ],
+            "defines": [
+                "__C51__",
+                "__VSCODE_C51__",
+                "reentrant=",
+                "compact=",
+                "small=",
+                "large=",
+                "data=",
+                "idata=",
+                "pdata=",
+                "bdata=",
+                "xdata=",
+                "code=",
+                "bit=char",
+                "sbit=char",
+                "sfr=char",
+                "sfr16=int",
+                "sfr32=int",
+                "interrupt=",
+                "using=",
+                "_at_=",
+                "_priority_=",
+                "_task_="
+            ],
+            "intelliSenseMode": "${default}",
+            "compileCommands": "${workspaceFolder}/build/STC8/compile_commands.json",
+            "configurationProvider": "cl.eide"
+        }
+    ],
+    "version": 4
+}

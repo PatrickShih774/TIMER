@@ -586,6 +586,11 @@
               <FileType>1</FileType>
               <FilePath>.\device\ST7567.c</FilePath>
             </File>
+            <File>
+              <FileName>ST7567.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\MCU\ecbm-library-lite-master\device\ST7567.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

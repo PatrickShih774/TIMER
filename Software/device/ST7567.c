@@ -12,22 +12,27 @@ bit lcd_seg_reverse        = LCD_SEG_REVERSE,
     lcd_black_reverse      = LCD_BLACK_REVERSE;
 unsigned char lcd_contrast = LCD_CONTRAST;
 
+/*********************************
+函数名称：Lcd_write_byte
+功能：LCD通过软件SPI发送一个字节
+输入：写入内容
+输出：无
+备注：软件串口
+*********************************/
+#if (LCD_INTERFACE == LCD_INTERFACE_SPI_SW)
 void Lcd_write_byte(unsigned char Byte)
 {
-    char i;
+    unsigned char i;
     for (i = 0; i < 8; i++)
     {
         LCD_CLK = 0;
-        delay_us(2);
-        if (Byte & 0x80)
-            LCD_DAT = 1;
-        else
-            LCD_DAT = 0;
+        LCD_DAT = (Byte & 0x80);
+        Byte <<= 1;
         LCD_CLK = 1;
-        delay_us(2);
-        Byte = Byte <<= 1;
     }
 }
+#endif
+
 /*********************************
 函数名称：Lcd_write_cmd
 功能：LCD写指令
@@ -40,10 +45,27 @@ void Lcd_write_cmd(unsigned char cmd)
     EA     = 0;
     LCD_CS = 0;
     LCD_RS = 0;
+#if (LCD_INTERFACE == LCD_INTERFACE_6800PARALLEL)
+    //	LCD_RW=0;
+    LCD_DATA = cmd;
+    LCD_E    = 0;
+    _nop_();
+    LCD_E = 1;
+#elif (LCD_INTERFACE == LCD_INTERFACE_8080PARALLEL)
+    //	LCD_RD=1;
+    LCD_DATA = cmd;
+    LCD_WR   = 0;
+    _nop_();
+    LCD_WR   = 1;
+#elif (LCD_INTERFACE == LCD_INTERFACE_SPI_SW)
     Lcd_write_byte(cmd);
+#elif (LCD_INTERFACE == LCD_INTERFACE_SPI_HW)
+    SPIHW_Write(cmd);
+#endif
     LCD_CS = 1;
     EA     = 1;
 }
+
 /*********************************
 函数名称：Lcd_write_dat
 功能：LCD写数据
@@ -56,10 +78,27 @@ void Lcd_write_dat(unsigned char dat)
     EA     = 0;
     LCD_CS = 0;
     LCD_RS = 1;
+#if (LCD_INTERFACE == LCD_INTERFACE_6800PARALLEL)
+    //	LCD_RW=0;
+    LCD_DATA = dat;
+    LCD_E    = 0;
+    _nop_();
+    LCD_E = 1;
+#elif (LCD_INTERFACE == LCD_INTERFACE_8080PARALLEL)
+    //	LCD_RD=1;
+    LCD_DATA = dat;
+    LCD_WR   = 0;
+    _nop_();
+    LCD_WR = 1;
+#elif (LCD_INTERFACE == LCD_INTERFACE_SPI_SW)
     Lcd_write_byte(dat);
+#elif (LCD_INTERFACE == LCD_INTERFACE_SPI_HW)
+    SPIHW_Write(dat);
+#endif
     LCD_CS = 1;
     EA     = 1;
 }
+
 /*********************************
 函数名称：Lcd_set_pos
 功能：LCD设置坐标
@@ -75,6 +114,7 @@ void Lcd_set_pos(unsigned char x, unsigned char y)
     Lcd_write_cmd(LCD_Set_Column_Address_lower_bit | x & 0x0f);          //低地址
     Lcd_write_cmd(LCD_Set_Column_Address_upper_bit | ((x & 0xf0) >> 4)); //高地址
 }
+
 /*********************************
 函数名称：Lcd_fill
 功能：LCD填充
@@ -96,6 +136,7 @@ void Lcd_fill(unsigned char x0, unsigned char y0, unsigned char h, unsigned char
             Lcd_write_dat(dat);
     }
 }
+
 /*********************************
 函数名称：Lcd_cls
 功能：LCD清屏
@@ -107,6 +148,7 @@ void Lcd_cls()
 {
     Lcd_fill(0, 0, 132, 8, 0x00);
 }
+
 /*********************************
 函数名称：Lcd_on
 功能：LCD开启显示
@@ -118,6 +160,7 @@ void Lcd_on()
 {
     Lcd_write_cmd(LCD_Set_Display_ON_OFF | LCD_Display_ON);
 }
+
 /*********************************
 函数名称：Lcd_off
 功能：LCD关闭显示
@@ -129,6 +172,7 @@ void Lcd_off()
 {
     Lcd_write_cmd(LCD_Set_Display_ON_OFF | LCD_Display_OFF);
 }
+
 /*********************************
 函数名称：Lcd_set_seg_reverse
 功能：LCD设置垂直镜像
@@ -141,6 +185,7 @@ void Lcd_set_seg_reverse(bit on)
     lcd_seg_reverse = on;
     Lcd_write_cmd(LCD_Set_SEG_Direction | (on ? LCD_SEG_Direction_reverse : LCD_SEG_Direction_normal));
 }
+
 /*********************************
 函数名称：Lcd_set_com_reverse
 功能：LCD设置水平镜像
@@ -182,6 +227,7 @@ void Lcd_set_contrast(unsigned char contrast)
     Lcd_write_cmd(LCD_Set_EV);
     Lcd_write_cmd(contrast);
 }
+
 /*********************************
 函数名称：Lcd_write_icon
 功能：LCD写图标RAM（第9PAGE）
@@ -212,6 +258,7 @@ void Lcd_clear_icon()
         Lcd_write_icon(i, 0);
 }
 #endif
+
 /*********************************
 函数名称：Lcd_init
 功能：LCD初始化
@@ -220,43 +267,46 @@ void Lcd_clear_icon()
 备注：
 *********************************/
 void Lcd_init()
-{
-    gpio_mode(D32, GPIO_PP);
+{    
     gpio_mode(D33, GPIO_PP);
     gpio_mode(D34, GPIO_PP);
     gpio_mode(D35, GPIO_PP);
     gpio_mode(D36, GPIO_PP);
+    gpio_mode(D37, GPIO_PP);
+    gpio_mode(D11, GPIO_PP);
     LCD_RST = 0; //硬复位
     delay_ms(10);
     LCD_RST = 1;
     delay_ms(10);
 
     Lcd_write_cmd(LCD_Reset); //软复位
-    delay_ms(5);
-    Lcd_write_cmd(LCD_Set_Display_ON_OFF); //开显示
-    delay_ms(5);
-    Lcd_write_cmd(0x2c); //升压步聚1打开内部升压
-    delay_ms(5);
-    Lcd_write_cmd(0x2e); //升压步聚2电压调整电路
-    delay_ms(5);
-    Lcd_write_cmd(0x2f); //升压步聚3电压跟随器
-    delay_ms(5);
-    Lcd_write_cmd(0x24); /*粗调对比度，可设置范围0x20～0x27*/
-    Lcd_write_cmd(0x81); /*微调对比度*/
-    Lcd_write_cmd(0x2f); /*微调对比度的值，可设置范围0x00～0x3f*/
-    Lcd_write_cmd(0xa2); /*1/9 偏压比（bias）*/
-    Lcd_write_cmd(0xc8); /*行扫描顺序：从上到下*/
-    Lcd_write_cmd(0xa0); /*列扫描顺序：从左到右*/
-    Lcd_write_cmd(0x40); /*起始行：第一行开始*/
-    Lcd_write_cmd(0xaf); /*开显示*/
-    Lcd_cls();           //清屏
+    delay_ms(100);
+    Lcd_off();
+    Lcd_write_cmd(LCD_Bias_Select | LCD_Bias_Select_1_9_bias);      //偏压比
+    Lcd_write_cmd(LCD_Regulation_Ratio | LCD_Rv0_RATIO);            //设置V0电阻比例
+    Lcd_set_seg_reverse(lcd_seg_reverse);                           //垂直镜像
+    Lcd_set_com_reverse(lcd_com_reverse);                           //水平镜像
+    Lcd_set_black_reverse(lcd_black_reverse);                       //反显
+    Lcd_set_contrast(lcd_contrast);                                 //液晶驱动电压调整（对比度）
+    Lcd_write_cmd(LCD_Set_All_Pixel_ON | LCD_All_Pixel_ON_Disable); //关全部显示
+    Lcd_write_cmd(LCD_Set_Booster);
+    Lcd_write_cmd(LCD_Set_Booster_2x_3x_4x);                      //升压比
+    Lcd_write_cmd(LCD_Power_Control | LCD_Power_Control_Booster); //开升压器
+    delay_ms(10);
+    Lcd_write_cmd(LCD_Power_Control | LCD_Power_Control_Booster | LCD_Power_Control_Vadj); //开电压调整器
+    delay_ms(10);
+    Lcd_write_cmd(LCD_Power_Control | LCD_Power_Control_Booster | LCD_Power_Control_Vadj | LCD_Power_Control_Follow); //开电压跟随器
+    delay_ms(2);
+    Lcd_write_cmd(LCD_Set_Start_Line | LCD_START_LINE); //设置0页起始行
+    Lcd_cls();                                          //清屏
+    LCD_BL = 1;//打开背光
 #if LCD_ICON
     Lcd_clear_icon();
 #endif
     Lcd_set_pos(0, 0); //坐标归位
-    Lcd_write_cmd(0xaf); /*开显示*/
-    //uart_printf(1, "LCD init OK");
+    Lcd_on();          //开显示
 }
+
 /*********************************
 函数名称：Lcd_pic
 功能：LCD显示图片
@@ -278,6 +328,7 @@ void Lcd_pic(unsigned char x0, unsigned char y0, unsigned char h, unsigned char 
             Lcd_write_dat(b ? ~*pic++ : *pic++);
     }
 }
+
 /*********************************
 函数名称：Lcd_P8x16char
 功能：LCD显示一个8x16字符
@@ -293,6 +344,7 @@ void Lcd_P8x16char(unsigned char x, unsigned char y, unsigned char chr, bit b)
         return;
     Lcd_pic(x, y, 8, 2, &ASC8X16[(chr - 32) * 16], b);
 }
+
 /*********************************
 函数名称：Lcd_P8x16Str
 功能：LCD显示8x16字符串
@@ -309,6 +361,7 @@ void Lcd_P8x16Str(unsigned char x, unsigned char y, unsigned char *str, bit b)
     }
 }
 #endif
+
 /*********************************
 函数名称：Lcd_P5x7char
 功能：LCD显示一个5x7字符
@@ -355,7 +408,6 @@ const unsigned int CH_NUM = (sizeof GB_16) / 34; //计算字库字数
 
 void Lcd_P16x16Ch(unsigned char x, unsigned char y, unsigned char *cnstr, bit b)
 {
-
     unsigned int word;
     if (x > 131 || y > 7)
         return;
@@ -377,4 +429,71 @@ void Lcd_P16x16Ch(unsigned char x, unsigned char y, unsigned char *cnstr, bit b)
         }
     }
 }
+void LCD_TEST(){
+    Lcd_P16x16Ch(0, 0, "  ST7567  DEMO ", 0);
+    Lcd_P16x16Ch(0, 2, "   液晶屏测试   ", 0);
+    Lcd_P16x16Ch(0, 4, "   LCD12864 or  ", 0);
+    Lcd_P16x16Ch(0, 6, "    LCD13264    ", 0);
+    // delay_ms(2000);
+    // Lcd_cls();
+    // Lcd_P16x16Ch(0, 0, "测试时间", 0);
+    // Lcd_P5x7Str(64, 0, __DATE__, 0);
+    // Lcd_P5x7Str(72, 1, __TIME__, 0);
+    // Lcd_P16x16Ch(0, 2, " 控制器:ST7567 ", 0);
+    // Lcd_P16x16Ch(0, 4, "接口:", 0);
+    // Lcd_P16x16Ch(0, 6, "测试人:社会易姐", 0);
+    // delay_ms(2000);
+    // Lcd_cls();
+    //刷屏测试
+    // Lcd_P16x16Ch(0, 0, "刷屏测试:", 1);
+    // delay_ms(1000);
+    // Lcd_fill(0, 0, 132, 8, 0xff);
+    // delay_ms(500);
+    // Lcd_fill(0, 0, 132, 8, 0x00);
+    // delay_ms(500);
+    // Lcd_fill(0, 0, 132, 8, 0x55);
+    // delay_ms(500);
+    // Lcd_fill(0, 0, 132, 8, 0xaa);
+    // delay_ms(500);
+    // Lcd_cls();
+    // // 8x16ASCLL测试
+    // Lcd_P16x16Ch(0, 0, "8x16ASCLL测试:", 1);
+    // Lcd_P16x16Ch(0, 2, " !\"#$%&'()*+,-./", 0);
+    // Lcd_P16x16Ch(0, 4, "0123456789:;<=>?", 0);
+    // Lcd_P16x16Ch(0, 6, "@ABCDEFGHIJKLMNO", 0);
+    // delay_ms(2000);
+    // Lcd_cls();
+    // Lcd_P16x16Ch(0, 0, "PQRSTUVWXYZ[\\]^_", 0);
+    // Lcd_P16x16Ch(0, 2, "`abcdefghijklmno", 0);
+    // Lcd_P16x16Ch(0, 4, "pqrstuvwxyz{|}~", 0);
+    // delay_ms(2000);
+    // Lcd_cls();
+    // // 5x7ASCLL测试
+    // Lcd_P16x16Ch(0, 0, "5x7ASCLL测试:", 1);
+    // Lcd_P5x7Str(0, 2, " !\"#$%&'()*+,-./01234", 0);
+    // Lcd_P5x7Str(0, 3, "56789:;<=>?@ABCDEFGHI", 0);
+    // Lcd_P5x7Str(0, 4, "JKLMNOPQRSTUVWXYZ[\\]^", 0);
+    // Lcd_P5x7Str(0, 5, "_`abcdefghijklmnopqrs", 0);
+    // Lcd_P5x7Str(0, 6, "tuvwxyz{|}~", 0);
+    // delay_ms(2000);
+    // Lcd_cls();
+    // // 16x16汉字测试
+    // Lcd_P16x16Ch(0, 0, "16x16汉字测试:", 1);
+    // Lcd_P16x16Ch(0, 2, "很久很久以前", 0);
+    // delay_ms(800);
+    // Lcd_P16x16Ch(0, 4, "巨龙突然出现", 0);
+    // delay_ms(800);
+    // Lcd_P16x16Ch(0, 6, "带来灾难", 0);
+    // delay_ms(800);
+    // Lcd_cls();
+    // Lcd_P16x16Ch(0, 0, "带走了公主又消失", 0);
+    // Lcd_P16x16Ch(0, 2, "不见", 0);
+    // delay_ms(800);
+    // Lcd_P16x16Ch(0, 4, "王国十分危险", 0);
+    // delay_ms(800);
+    // Lcd_P16x16Ch(0, 6, "世间谁最勇敢", 0);
+    // delay_ms(2000);
+    // Lcd_cls();
+}
+
 #endif

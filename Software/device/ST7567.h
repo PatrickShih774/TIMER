@@ -21,7 +21,7 @@
 
 /*初始化设置*/
 //初始对比度设置（对比度细调）  范围(0,63)
-#define LCD_CONTRAST 50
+#define LCD_CONTRAST 40
 
 // V0电阻比例设置（对比度粗调）  范围(0,7)
 #define LCD_Rv0_RATIO 4
@@ -78,11 +78,12 @@ sbit LCD_CS  = P1 ^ 2; //片选
 
 /*软件SPI模式*/
 #elif (LCD_INTERFACE == LCD_INTERFACE_SPI_SW)
-sbit LCD_DAT = P3 ^ 3; //串行数据
-sbit LCD_CLK = P3 ^ 2; //串行时钟
+sbit LCD_DAT = P3 ^ 7; //串行数据
+sbit LCD_CLK = P3 ^ 6; //串行时钟
 sbit LCD_RS  = P3 ^ 5; //数据指令
 sbit LCD_RST = P3 ^ 4; //复位
-sbit LCD_CS  = P3 ^ 6; //片选
+sbit LCD_CS  = P3 ^ 3; //片选
+sbit LCD_BL  = P1 ^ 1; //背光
 
 /*硬件SPI模式*/
 #elif (LCD_INTERFACE == LCD_INTERFACE_SPI_HW)
