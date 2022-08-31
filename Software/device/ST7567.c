@@ -5,6 +5,7 @@
 说明：ST7567（兼容ST7565、UC1701等等。。。）为单色STN控制器，接口：SPI/8-bit并口，分辨率132*64+1ICON,取模方式：8位竖置横排下高位
 备注：
 *****************************************/
+#include "ecbm_core.h" //加载库函数的头文件。
 #include "ST7567.h"
 
 bit lcd_seg_reverse        = LCD_SEG_REVERSE,
@@ -172,6 +173,17 @@ void Lcd_off()
 {
     Lcd_write_cmd(LCD_Set_Display_ON_OFF | LCD_Display_OFF);
 }
+/*********************************
+函数名称：Lcd_set_bl
+功能：LCD设置背光
+输入：0关闭，1打开
+输出：无
+备注：
+*********************************/
+void Lcd_set_bl(bit on)
+{
+    LCD_BL = on;
+}
 
 /*********************************
 函数名称：Lcd_set_seg_reverse
@@ -299,7 +311,7 @@ void Lcd_init()
     delay_ms(2);
     Lcd_write_cmd(LCD_Set_Start_Line | LCD_START_LINE); //设置0页起始行
     Lcd_cls();                                          //清屏
-    LCD_BL = 1;//打开背光
+    Lcd_set_bl(1);//背光
 #if LCD_ICON
     Lcd_clear_icon();
 #endif

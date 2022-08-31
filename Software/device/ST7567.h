@@ -1,7 +1,7 @@
 /*ST7567驱动（头文件）*/
 #ifndef __ST7567_H
 #define __ST7567_H
-#include "ecbm_core.h" //加载库函数的头文件。
+
 
 #define LCD_INTERFACE_6800PARALLEL 0
 #define LCD_INTERFACE_8080PARALLEL 1
@@ -20,8 +20,9 @@
 */
 
 /*初始化设置*/
+
 //初始对比度设置（对比度细调）  范围(0,63)
-#define LCD_CONTRAST 40
+#define LCD_CONTRAST 35
 
 // V0电阻比例设置（对比度粗调）  范围(0,7)
 #define LCD_Rv0_RATIO 4
@@ -84,6 +85,7 @@ sbit LCD_RS  = P3 ^ 5; //数据指令
 sbit LCD_RST = P3 ^ 4; //复位
 sbit LCD_CS  = P3 ^ 3; //片选
 sbit LCD_BL  = P1 ^ 1; //背光
+
 
 /*硬件SPI模式*/
 #elif (LCD_INTERFACE == LCD_INTERFACE_SPI_HW)

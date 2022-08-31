@@ -11,7 +11,22 @@
         "name": "DEVICE",
         "files": [
           {
+            "path": "device/DS1302.c"
+          },
+          {
+            "path": "device/DS1302.h"
+          },
+          {
+            "path": "device/EC11.c"
+          },
+          {
+            "path": "device/EC11.h"
+          },
+          {
             "path": "device/ST7567.c"
+          },
+          {
+            "path": "device/ST7567.h"
           }
         ],
         "folders": []
