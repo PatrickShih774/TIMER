@@ -679,8 +679,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\EC11.c</PathWithFileName>
-      <FilenameWithoutPath>EC11.c</FilenameWithoutPath>
+      <PathWithFileName>$TC_ROOT$\..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\DS1302.c</PathWithFileName>
+      <FilenameWithoutPath>..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\DS1302.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -691,8 +691,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\EC11.h</PathWithFileName>
-      <FilenameWithoutPath>EC11.h</FilenameWithoutPath>
+      <PathWithFileName>$TC_ROOT$\..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\DS1302.h</PathWithFileName>
+      <FilenameWithoutPath>..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\DS1302.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -703,8 +703,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\DS1302.c</PathWithFileName>
-      <FilenameWithoutPath>DS1302.c</FilenameWithoutPath>
+      <PathWithFileName>$TC_ROOT$\..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\EC11.c</PathWithFileName>
+      <FilenameWithoutPath>..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\EC11.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -715,8 +715,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\DS1302.h</PathWithFileName>
-      <FilenameWithoutPath>DS1302.h</FilenameWithoutPath>
+      <PathWithFileName>$TC_ROOT$\..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\EC11.h</PathWithFileName>
+      <FilenameWithoutPath>..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\EC11.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

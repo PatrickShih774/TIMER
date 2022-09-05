@@ -592,24 +592,24 @@
               <FilePath>..\..\..\MCU\ecbm-library-lite-master\device\ST7567.h</FilePath>
             </File>
             <File>
-              <FileName>EC11.c</FileName>
+              <FileName>..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\DS1302.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\EC11.c</FilePath>
+              <FilePath>$TC_ROOT$\..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\DS1302.c</FilePath>
             </File>
             <File>
-              <FileName>EC11.h</FileName>
+              <FileName>..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\DS1302.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\EC11.h</FilePath>
+              <FilePath>$TC_ROOT$\..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\DS1302.h</FilePath>
             </File>
             <File>
-              <FileName>DS1302.c</FileName>
+              <FileName>..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\EC11.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\DS1302.c</FilePath>
+              <FilePath>$TC_ROOT$\..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\EC11.c</FilePath>
             </File>
             <File>
-              <FileName>DS1302.h</FileName>
+              <FileName>..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\EC11.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\DS1302.h</FilePath>
+              <FilePath>$TC_ROOT$\..\..\Users\Patrick\Downloads\GIT项目\TIMER\Software\device\EC11.h</FilePath>
             </File>
           </Files>
         </Group>

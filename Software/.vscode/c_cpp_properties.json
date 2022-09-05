@@ -10,7 +10,8 @@
                 "C:\\Keil_v5\\C51\\INC",
                 "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Software",
                 "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Users\\Patrick\\Downloads\\MCU\\ecbm-library-lite-master\\device",
-                "c:\\Users\\Patrick\\Downloads\\MCU\\ecbm-library-lite-master\\device"
+                "c:\\Users\\Patrick\\Downloads\\MCU\\ecbm-library-lite-master\\device",
+                "c:\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Users\\Patrick\\Downloads\\GIT项目\\TIMER\\Software\\device"
             ],
             "defines": [
                 "__C51__",
